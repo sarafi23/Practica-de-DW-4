@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Practica4</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <div class="card">
+      <h2>Tu Perfil</h2>
+      <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+      <p><strong>Email:</strong> <span id="email"></span></p>
+      <p><strong>Rol:</strong> <span id="rol"></span></p>
+      <button onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <div class="card">
+      <h2>Usuarios Registrados</h2>
+      <table>
+        <thead>
+          <tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="tablaUsuarios"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
