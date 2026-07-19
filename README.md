@@ -5,16 +5,6 @@ Implementa un CRUD completo en MongoDB con Mongoose, autenticación con JWT y OA
 
 ---
 
-## 📋 Contenido de la asignación cumplido
-
-| Sesión | Tema | Estado |
-|--------|------|:------:|
-| 1 | CRUD en MongoDB (modelo, endpoints, Postman) | ✅ |
-| 2 | Autenticación JWT (login, middleware de protección) | ✅ |
-| 3 | OAuth con Google + Despliegue (Vercel + Render) | ✅ |
-
----
-
 ## ✨ Características
 
 - 🔐 **Autenticación**: registro, login con validación en tiempo real y OAuth de Google.
