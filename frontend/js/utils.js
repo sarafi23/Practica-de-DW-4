@@ -45,12 +45,17 @@ function inicializarNav() {
   if (getRol() === 'admin') mostrarAdminLink();
   actualizarBadgeCarrito();
   fetch(`${API}/auth/perfil`, { headers: { Authorization: `Bearer ${token}` } })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error('no ok');
+      return r.json();
+    })
     .then(user => {
       guardarRol(user.rol);
       if (user.rol === 'admin') mostrarAdminLink();
     })
-    .catch(() => logout());
+    .catch(err => {
+      console.warn('No se pudo verificar el perfil, se mantiene la sesión:', err.message);
+    });
 }
 
 function getCarrito() {
