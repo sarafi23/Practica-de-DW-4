@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Producto - myPC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="tienda.html" class="brand">my<span>PC</span></a>
+      <div class="nav-links">
+        <a href="tienda.html">Tienda</a>
+        <a href="carrito.html" class="cart-link">
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="perfil.html" id="navPerfil">Perfil</a>
+        <a href="admin.html" id="navAdmin" style="display:none">Admin</a>
+        <button onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="loadingProducto" class="spinner"></div>
+    <div id="productoDetalle" style="display:none"></div>
+    <div id="errorProducto" class="empty-state" style="display:none">
+      <div class="icon">⚠️</div>
+      <h3>Producto no encontrado</h3>
+      <p><a href="tienda.html" style="color:var(--primary)">Volver a la tienda</a></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/utils.js"></script>
+  <script src="js/producto.js"></script>
+</body>
+</html>

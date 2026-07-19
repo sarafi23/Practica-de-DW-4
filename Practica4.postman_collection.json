@@ -1,0 +1,107 @@
+{
+  "info": {
+    "_postman_id": "8ab06b97-a4b5-4fc4-86ee-5bf1b093bb16",
+    "name": "Practica4 - MongoDB, JWT y OAuth",
+    "description": "Coleccion de pruebas para CRUD, JWT y autenticacion. Ejecuta las solicitudes en el orden indicado.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "testEmail", "value": "usuario.postman@example.com" },
+    { "key": "testPassword", "value": "clave123" }
+  ],
+  "item": [
+    {
+      "name": "1. Crear usuario (CRUD)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Usuario Postman\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/usuarios"
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Usuario creado', function () { pm.expect(pm.response.code).to.eql(201); });",
+            "pm.collectionVariables.set('userId', pm.response.json()._id);"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "2. Iniciar sesion (JWT)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/login"
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Login correcto', function () { pm.expect(pm.response.code).to.eql(200); });",
+            "pm.collectionVariables.set('token', pm.response.json().token);",
+            "pm.collectionVariables.set('userId', pm.response.json().usuario._id);"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "3. Ver perfil protegido",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/auth/perfil"
+      }
+    },
+    {
+      "name": "4. Listar usuarios",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/usuarios"
+      }
+    },
+    {
+      "name": "5. Obtener usuario por ID",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/usuarios/{{userId}}"
+      }
+    },
+    {
+      "name": "6. Actualizar usuario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Usuario Postman Actualizado\",\n  \"email\": \"{{testEmail}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/usuarios/{{userId}}"
+      }
+    },
+    {
+      "name": "7. Eliminar usuario",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/usuarios/{{userId}}"
+      }
+    }
+  ]
+}

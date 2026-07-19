@@ -3,31 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Practica4</title>
+  <title>Redirigiendo...</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Dashboard</h1>
-    <div class="card">
-      <h2>Tu Perfil</h2>
-      <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-      <p><strong>Email:</strong> <span id="email"></span></p>
-      <p><strong>Rol:</strong> <span id="rol"></span></p>
-      <button onclick="logout()">Cerrar sesión</button>
-    </div>
-
-    <div class="card">
-      <h2>Usuarios Registrados</h2>
-      <table>
-        <thead>
-          <tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
-        </thead>
-        <tbody id="tablaUsuarios"></tbody>
-      </table>
-    </div>
+  <div class="container" style="text-align:center; padding:60px 20px;">
+    <div class="spinner"></div>
+    <p style="margin-top:20px; color:var(--text-light);">Redirigiendo...</p>
   </div>
-
-  <script src="js/dashboard.js"></script>
+  <script>window.location.href = 'tienda.html';</script>
 </body>
 </html>

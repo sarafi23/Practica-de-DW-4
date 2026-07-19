@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil - myPC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="tienda.html" class="brand">my<span>PC</span></a>
+      <div class="nav-links">
+        <a href="tienda.html">Tienda</a>
+        <a href="carrito.html" class="cart-link">
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="perfil.html" class="active">Perfil</a>
+        <a href="admin.html" id="navAdmin" style="display:none">Admin</a>
+        <button onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Mi Perfil</h1>
+    </div>
+
+    <div id="loadingPerfil" class="spinner"></div>
+
+    <div id="perfilContent" style="display:none">
+
+      <div class="card profile-card">
+        <div class="profile-avatar-section">
+          <div class="avatar-wrapper" onclick="document.getElementById('avatarInput').click()">
+            <img id="avatarPreview" class="profile-avatar-img" src="" alt="Avatar" style="display:none" />
+            <div id="avatarLetra" class="profile-avatar-letter"></div>
+            <div class="avatar-overlay">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            </div>
+          </div>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none" />
+          <div class="profile-name">
+            <h2 id="perfilNombre"></h2>
+            <p id="perfilEmail"></p>
+            <span id="perfilRol" class="detalle-categoria"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div class="card">
+          <h2>Datos Personales</h2>
+          <form id="profileForm" onsubmit="guardarPerfil(event)">
+            <div class="form-group">
+              <label>Nombre completo</label>
+              <input type="text" id="editNombre" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="editEmail" disabled style="background:var(--bg);color:var(--text-light)" />
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="editTelefono" placeholder="Ej: 555-0100" />
+            </div>
+            <div class="form-group">
+              <label>Dirección</label>
+              <input type="text" id="editDireccion" placeholder="Calle y número, Ciudad" />
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </form>
+        </div>
+
+        <div>
+          <div class="card">
+            <h2>Estadísticas de Compras</h2>
+            <div id="statsContent">
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-icon stat-icon-blue">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="statCompras">0</span>
+                    <span class="stat-label">Total compras</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon stat-icon-green">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="statGastado">$0</span>
+                    <span class="stat-label">Total gastado</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon stat-icon-purple">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="statCategoria">—</span>
+                    <span class="stat-label">Categoría favorita</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon stat-icon-orange">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="statMarca">—</span>
+                    <span class="stat-label">Marca favorita</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" id="usersCard" style="display:none">
+            <h2>Usuarios Registrados</h2>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tablaUsuarios"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/utils.js"></script>
+  <script src="js/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito - myPC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="tienda.html" class="brand">my<span>PC</span></a>
+      <div class="nav-links">
+        <a href="tienda.html">Tienda</a>
+        <a href="carrito.html" class="active cart-link">
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="perfil.html" id="navPerfil">Perfil</a>
+        <a href="admin.html" id="navAdmin" style="display:none">Admin</a>
+        <button onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Carrito de Compras</h1>
+    </div>
+
+    <div id="carritoVacio" class="empty-state">
+      <div class="icon">🛒</div>
+      <h3>Tu carrito está vacío</h3>
+      <p>Explora nuestro catálogo y agrega componentes</p>
+      <a href="tienda.html" class="btn btn-primary" style="margin-top:16px;display:inline-flex">Ir a la tienda</a>
+    </div>
+
+    <div id="carritoContent" style="display:none">
+      <div class="carrito-grid">
+        <div class="card">
+          <div id="carritoItems"></div>
+        </div>
+        <div>
+          <div class="card carrito-resumen">
+            <h2>Resumen</h2>
+            <div class="resumen-row">
+              <span>Productos</span>
+              <span id="resumenItems">0</span>
+            </div>
+            <div class="resumen-row">
+              <span>Subtotal</span>
+              <span id="resumenSubtotal">$0.00</span>
+            </div>
+            <div class="resumen-divider"></div>
+            <div class="resumen-row resumen-total">
+              <span>Total</span>
+              <span id="resumenTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="mostrarCheckout()">
+              Proceder al pago
+            </button>
+            <button class="btn btn-ghost btn-block" onclick="vaciarCarrito()" style="margin-top:8px">
+              Vaciar carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkoutOverlay" class="modal-overlay" style="display:none" onclick="cerrarCheckout(event)">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="cerrarCheckout()">✕</button>
+        <h2>Confirmar compra</h2>
+        <form id="checkoutForm" onsubmit="confirmarCompra(event)">
+          <div class="form-group">
+            <label>Dirección de envío</label>
+            <textarea id="checkoutDireccion" rows="3" placeholder="Calle, número, ciudad, código postal" required></textarea>
+          </div>
+          <div class="checkout-resumen">
+            <p><strong>Productos:</strong> <span id="checkoutItems">0</span></p>
+            <p><strong>Total a pagar:</strong> <span id="checkoutTotal">$0.00</span></p>
+          </div>
+          <div class="checkout-actions">
+            <button type="button" class="btn btn-ghost" onclick="cerrarCheckout()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="btnConfirmarCompra">
+              Confirmar compra
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/utils.js"></script>
+  <script src="js/carrito.js"></script>
+</body>
+</html>

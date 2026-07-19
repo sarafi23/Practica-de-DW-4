@@ -21,4 +21,12 @@ const proteger = async (req, res, next) => {
   }
 };
 
-module.exports = { proteger };
+const esAdmin = (req, res, next) => {
+  if (req.usuario && req.usuario.rol === 'admin') {
+    next();
+  } else {
+    return res.status(403).json({ msg: 'Acceso denegado, se requiere rol admin' });
+  }
+};
+
+module.exports = { proteger, esAdmin };

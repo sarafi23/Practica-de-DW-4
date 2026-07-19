@@ -3,46 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio - Practica4</title>
+  <title>myPC - Tienda de Componentes</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>Bienvenido a Practica4</h1>
+<body class="auth-page">
+  <div class="auth-hero-bg">
+    <canvas id="particlesCanvas"></canvas>
+  </div>
 
-    <div id="authForms">
-      <div class="card" id="loginForm">
-        <h2>Iniciar Sesión</h2>
-        <input type="email" id="loginEmail" placeholder="Email" />
-        <input type="password" id="loginPassword" placeholder="Contraseña" />
-        <button onclick="login()">Entrar</button>
-        <p class="error" id="loginError"></p>
-        <hr />
-        <a href="http://localhost:5000/api/auth/google" class="btn-google">Iniciar con Google</a>
-        <p class="switch">¿No tienes cuenta? <a href="#" onclick="showRegister()">Regístrate</a></p>
-      </div>
-
-      <div class="card" id="registerForm" style="display:none">
-        <h2>Registrarse</h2>
-        <input type="text" id="regNombre" placeholder="Nombre completo" />
-        <input type="email" id="regEmail" placeholder="Email" />
-        <input type="password" id="regPassword" placeholder="Contraseña (mín. 6 caracteres)" />
-        <button onclick="register()">Crear cuenta</button>
-        <p class="error" id="regError"></p>
-        <p class="switch">¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Inicia sesión</a></p>
-      </div>
+  <div class="auth-card">
+    <div class="auth-card-header">
+      <div class="auth-logo">my<span>PC</span></div>
+      <h1>Bienvenido</h1>
+      <p>Inicia sesión o crea tu cuenta</p>
     </div>
 
-    <div id="perfilInfo" style="display:none">
-      <div class="card">
-        <h2>Perfil</h2>
-        <p><strong>Nombre:</strong> <span id="perfilNombre"></span></p>
-        <p><strong>Email:</strong> <span id="perfilEmail"></span></p>
-        <button onclick="logout()">Cerrar sesión</button>
+    <div id="loginForm">
+      <div class="auth-error" id="loginError"></div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="tu@email.com" />
+        <div class="field-error" id="loginEmailError"></div>
       </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" />
+        <div class="field-error" id="loginPasswordError"></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="login()">Iniciar sesión</button>
+
+      <div class="divider">o continúa con</div>
+
+      <a href="/api/auth/google" class="btn-google">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Iniciar con Google
+      </a>
+
+      <p class="auth-switch">¿No tienes cuenta? <a onclick="showRegister()">Crear cuenta</a></p>
+    </div>
+
+    <div id="registerForm" style="display:none">
+      <div class="auth-error" id="regError"></div>
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="regNombre" placeholder="Tu nombre" />
+        <div class="field-error" id="regNombreError"></div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="tu@email.com" />
+        <div class="field-error" id="regEmailError"></div>
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="regTelefono" placeholder="Ej: 555-0100" />
+      </div>
+      <div class="form-group">
+        <label>Dirección</label>
+        <input type="text" id="regDireccion" placeholder="Calle y número, Ciudad" />
+      </div>
+      <div class="form-group">
+        <label>Contraseña (mín. 6 caracteres)</label>
+        <input type="password" id="regPassword" placeholder="••••••••" />
+        <div class="field-error" id="regPasswordError"></div>
+      </div>
+      <div class="form-group">
+        <label>Confirmar contraseña</label>
+        <input type="password" id="regConfirmPassword" placeholder="••••••••" />
+        <div class="field-error" id="regConfirmError"></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="register()">Crear cuenta</button>
+
+      <p class="auth-switch">¿Ya tienes cuenta? <a onclick="showLogin()">Iniciar sesión</a></p>
     </div>
   </div>
 
   <script src="js/app.js"></script>
+  <script>
+const canvas = document.getElementById('particlesCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() {
+  const bg = canvas.parentElement;
+  W = canvas.width = bg.offsetWidth;
+  H = canvas.height = bg.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const mouse = { x: -1000, y: -1000 };
+document.addEventListener('mousemove', e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+document.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+const NUM = 55;
+const particles = [];
+for (let i = 0; i < NUM; i++) {
+  particles.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 2 + 1,
+    a: Math.random() * 0.5 + 0.2,
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  for (let p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+
+    const dx = mouse.x - p.x;
+    const dy = mouse.y - p.y;
+    const dist2 = dx * dx + dy * dy;
+    if (dist2 < 25000) {
+      const force = 0.5;
+      const angle = Math.atan2(dy, dx);
+      p.vx -= Math.cos(angle) * force * 0.05;
+      p.vy -= Math.sin(angle) * force * 0.05;
+      const maxV = 1.2;
+      const sp = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
+      if (sp > maxV) { p.vx = (p.vx/sp)*maxV; p.vy = (p.vy/sp)*maxV; }
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(147,197,253,${p.a})`;
+    ctx.fill();
+  }
+
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 130) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(147,197,253,${(1 - d/130) * 0.2})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+
+    const dx = mouse.x - particles[i].x;
+    const dy = mouse.y - particles[i].y;
+    const d = Math.sqrt(dx*dx + dy*dy);
+    if (d < 150 && mouse.x > 0) {
+      ctx.beginPath();
+      ctx.moveTo(particles[i].x, particles[i].y);
+      ctx.lineTo(mouse.x, mouse.y);
+      ctx.strokeStyle = `rgba(147,197,253,${(1 - d/150) * 0.25})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+  </script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - myPC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="tienda.html" class="brand">my<span>PC</span></a>
+      <div class="nav-links">
+        <a href="tienda.html">Tienda</a>
+        <a href="carrito.html" class="cart-link">
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="perfil.html">Perfil</a>
+        <a href="admin.html" class="active">Admin</a>
+        <button onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Panel de Administración</h1>
+    </div>
+
+    <div id="loadingAdmin" class="spinner"></div>
+
+    <div id="adminContent" style="display:none">
+      <div class="card">
+        <h2 id="formTitle">Nuevo Producto</h2>
+        <form id="productoForm" onsubmit="guardarProducto(event)">
+          <input type="hidden" id="productoId" />
+          <div class="form-group">
+            <label>Nombre del producto</label>
+            <input type="text" id="pNombre" required />
+          </div>
+          <div class="form-group">
+            <label>Categoría</label>
+            <select id="pCategoria" required>
+              <option value="">Seleccionar</option>
+              <option value="CPU">CPU</option>
+              <option value="GPU">GPU</option>
+              <option value="RAM">RAM</option>
+              <option value="Almacenamiento">Almacenamiento</option>
+              <option value="Fuente">Fuente</option>
+              <option value="Placa Madre">Placa Madre</option>
+              <option value="Gabinete">Gabinete</option>
+              <option value="Refrigeración">Refrigeración</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <div class="form-group" style="flex:1;">
+              <label>Precio ($)</label>
+              <input type="number" id="pPrecio" min="0" step="0.01" required />
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Stock</label>
+              <input type="number" id="pStock" min="0" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea id="pDescripcion" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>URL de imagen (opcional)</label>
+            <input type="text" id="pImagen" placeholder="https://..." />
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+            <button type="button" class="btn btn-ghost" id="btnCancelar" onclick="cancelarEdicion()" style="display:none">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Productos Registrados</h2>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tablaProductos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/utils.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

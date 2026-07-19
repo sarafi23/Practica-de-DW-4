@@ -29,7 +29,7 @@ JWT_SECRET=una_clave_secreta_segura
 GOOGLE_CLIENT_ID=tu_google_client_id
 GOOGLE_CLIENT_SECRET=tu_google_client_secret
 GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:5000
 ```
 
 ### MongoDB Atlas
@@ -40,7 +40,7 @@ FRONTEND_URL=http://localhost:3000
 ### OAuth Google
 1. Ir a [Google Cloud Console](https://console.cloud.google.com/).
 2. Crear proyecto > Credenciales > ID de cliente OAuth.
-3. Agregar origen `http://localhost:3000` y redirección `http://localhost:5000/api/auth/google/callback`.
+3. Agregar origen `http://localhost:5000` y redirección `http://localhost:5000/api/auth/google/callback`.
 4. Copiar Client ID y Secret al `.env`.
 
 ## Ejecución

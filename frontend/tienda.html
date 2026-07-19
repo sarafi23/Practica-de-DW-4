@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda - myPC</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="tienda.html" class="brand">my<span>PC</span></a>
+      <div class="nav-links">
+        <a href="tienda.html" class="active">Tienda</a>
+        <a href="carrito.html" class="cart-link">
+          Carrito
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="perfil.html" id="navPerfil">Perfil</a>
+        <a href="admin.html" id="navAdmin" style="display:none">Admin</a>
+        <button onclick="logout()" id="navLogout">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Catálogo de Componentes</h1>
+    </div>
+
+    <div class="filtros-bar">
+      <select id="filtroCategoria" onchange="cargarProductos()">
+        <option value="">Todas las categorías</option>
+        <option value="CPU">CPU</option>
+        <option value="GPU">GPU</option>
+        <option value="RAM">RAM</option>
+        <option value="Almacenamiento">Almacenamiento</option>
+        <option value="Fuente">Fuente</option>
+        <option value="Placa Madre">Placa Madre</option>
+        <option value="Gabinete">Gabinete</option>
+        <option value="Refrigeración">Refrigeración</option>
+      </select>
+      <input type="text" id="busqueda" placeholder="Buscar producto..." onkeyup="cargarProductos()" />
+    </div>
+
+    <div id="loadingTienda" class="spinner"></div>
+    <div id="productosGrid" class="productos-grid" style="display:none"></div>
+    <div id="sinResultados" class="empty-state" style="display:none">
+      <div class="icon">🔍</div>
+      <h3>No se encontraron productos</h3>
+      <p>Intenta con otra categoría o término de búsqueda</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/utils.js"></script>
+  <script src="js/tienda.js"></script>
+</body>
+</html>

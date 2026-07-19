@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-const { proteger } = require('../middleware/auth');
+const { proteger, esAdmin } = require('../middleware/auth');
 
 // CREATE - POST /api/usuarios
 router.post('/', async (req, res) => {
@@ -69,8 +69,8 @@ router.put('/:id', proteger, async (req, res) => {
   }
 });
 
-// DELETE - DELETE /api/usuarios/:id
-router.delete('/:id', proteger, async (req, res) => {
+// DELETE - DELETE /api/usuarios/:id (solo admin)
+router.delete('/:id', proteger, esAdmin, async (req, res) => {
   try {
     const usuario = await User.findByIdAndDelete(req.params.id);
     if (!usuario) {

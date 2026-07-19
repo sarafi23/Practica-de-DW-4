@@ -1,4 +1,12 @@
-const API = 'http://localhost:5000/api';
+const API = '/api';
+
+const params = new URLSearchParams(window.location.search);
+const tokenUrl = params.get('token');
+if (tokenUrl) {
+  localStorage.setItem('token', tokenUrl);
+  console.log('✅ Token JWT (OAuth):', tokenUrl);
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
 
 function getToken() {
   const t = localStorage.getItem('token');
@@ -15,6 +23,11 @@ async function cargarPerfil() {
   document.getElementById('nombre').textContent = user.nombre;
   document.getElementById('email').textContent = user.email;
   document.getElementById('rol').textContent = user.rol;
+
+  if (user.rol === 'admin') {
+    const adminLink = document.getElementById('navAdmin');
+    if (adminLink) adminLink.style.display = 'inline';
+  }
 }
 
 async function cargarUsuarios() {

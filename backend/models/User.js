@@ -28,11 +28,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  telefono: {
+    type: String,
+    default: '',
+  },
+  direccion: {
+    type: String,
+    default: '',
+  },
   rol: {
     type: String,
     enum: ['usuario', 'admin'],
     default: 'usuario',
   },
+  compras: [{
+    producto: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
+    categoria: String,
+    marca: String,
+    precio: Number,
+    fecha: { type: Date, default: Date.now },
+  }],
 }, {
   timestamps: true,
 });
