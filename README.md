@@ -1,124 +1,208 @@
-# myPC - Tienda de Componentes de PC
+# myPC — Tienda de Componentes de PC
 
-Una plataforma web completa para comprar componentes de hardware. Incluye un sistema de autenticación seguro, panel de administración con CRUD de usuarios y productos, carrito de compras con control de stock, pasarela de pago simulada, subida de avatars y estadísticas de compra avanzadas en tiempo real.
-
-## Características principales
-
-- 🔒 **Autenticación segura**: Registro, login con validación en tiempo real y OAuth de Google integrado.
-- 🛒 **Sistema de Carrito**: Gestión en localStorage con control de stock dinámico y checkout con dirección de envío.
-- 🛍️ **Catálogo de Productos**: Búsqueda, filtrado por categorías y marcas, y página de detalle con productos relacionados.
-- 👤 **Perfil de Usuario**: Actualización de datos, subida de avatar vía Multer y panel de estadísticas de compra (Gasto total, compras realizadas, marca y categoría favoritas).
-- 🛠️ **Panel de Administración**: Gestión completa de usuarios (CRUD) y control de inventario de productos.
-- 🎨 **Interfaz de Vanguardia**: Diseño responsivo y moderno con Glassmorphism en login, fondo interactivo con sistema de partículas y modo oscuro tecnológico.
-
-## Requisitos
-
-- Node.js >= 18
-- MongoDB Atlas (o instancia local de MongoDB)
-- Cuenta de Google Cloud Console (para OAuth)
-
-## Instalación y Configuración Local
-
-1. **Clonar repositorio**
-   ```bash
-   git clone <tu-repo>
-   cd "DW Practica4"
-   ```
-
-2. **Instalar dependencias del backend**
-   ```bash
-   cd backend
-   npm install
-   ```
-
-3. **Configurar variables de entorno**
-   Crea un archivo `.env` en la carpeta `backend` con las siguientes claves:
-   ```env
-   PORT=5000
-   MONGODB_URI=mongodb+srv://<usuario>:<password>@cluster0.xxxxx.mongodb.net/practica4?retryWrites=true&w=majority
-   JWT_SECRET=una_clave_secreta_segura
-   GOOGLE_CLIENT_ID=tu_google_client_id
-   GOOGLE_CLIENT_SECRET=tu_google_client_secret
-   GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
-   FRONTEND_URL=http://localhost:5000
-   ```
-
-4. **Sembrar base de datos (Seeding)**
-   Opcionalmente puedes rellenar la base de datos con los productos iniciales y usuarios de prueba ejecutando:
-   ```bash
-   node seed.js
-   ```
-   *Usuarios de prueba:*
-   - **Administrador**: `admin@mypc.com` / `admin123`
-   - **Cliente Demo**: `demo@test.com` / `123456` (con historial de compras ficticias cargado)
-
-5. **Ejecutar proyecto**
-   ```bash
-   npm run dev    # Con nodemon (desarrollo)
-   # o
-   npm start      # Producción
-   ```
-   Abre tu navegador en `http://localhost:5000`. El backend sirve el frontend de forma estática automáticamente.
-
-## Endpoints de la API
-
-### Autenticación y Perfil
-| Método | Ruta | Descripción | Requiere Token |
-|--------|------|-------------|:--------------:|
-| POST | `/api/auth/register` | Registrar usuario (con teléfono y dirección) | No |
-| POST | `/api/auth/login` | Iniciar sesión y obtener JWT | No |
-| GET | `/api/auth/google` | Iniciar sesión con Google OAuth | No |
-| GET | `/api/auth/perfil` | Obtener datos del perfil actual | Sí |
-| PUT | `/api/auth/perfil` | Actualizar nombre, teléfono y dirección | Sí |
-| POST | `/api/auth/avatar` | Subir foto de perfil (avatar) vía FormData | Sí |
-| GET | `/api/auth/stats` | Calcular estadísticas de compra del usuario | Sí |
-
-### CRUD de Usuarios (Administración)
-| Método | Ruta | Descripción | Requiere Admin |
-|--------|------|-------------|:--------------:|
-| GET | `/api/usuarios` | Listar todos los usuarios registrados | Sí |
-| POST | `/api/usuarios` | Registrar un nuevo usuario manualmente | Sí |
-| GET | `/api/usuarios/:id` | Obtener información detallada de un usuario | Sí |
-| PUT | `/api/usuarios/:id` | Actualizar rol o datos de un usuario | Sí |
-| DELETE | `/api/usuarios/:id` | Eliminar usuario del sistema | Sí |
-
-### Productos y Compras
-| Método | Ruta | Descripción | Requiere Auth |
-|--------|------|-------------|:-------------:|
-| GET | `/api/productos` | Obtener catálogo (soporta filtros de marca/categoría) | No |
-| GET | `/api/productos/:id` | Obtener detalle de un producto específico | No |
-| POST | `/api/productos` | Añadir nuevo componente al stock (Solo Admin) | Sí (Admin) |
-| PUT | `/api/productos/:id` | Actualizar stock/detalles de producto (Solo Admin) | Sí (Admin) |
-| DELETE | `/api/productos/:id` | Retirar producto del catálogo (Solo Admin) | Sí (Admin) |
-| POST | `/api/compras` | Finalizar compra, reducir stock y guardar en historial | Sí |
-
-## Despliegue en Producción
-
-### 1. Backend en Render
-1. Sube tu proyecto a GitHub.
-2. Crea un **Web Service** en [Render](https://render.com/).
-3. Conecta tu repositorio e indica **`backend`** como **Root Directory**.
-4. Usa los comandos por defecto:
-   - Build Command: `npm install`
-   - Start Command: `npm start`
-5. Configura las variables de entorno (`MONGODB_URI`, `JWT_SECRET`, etc.).
-6. Toma nota de la URL generada (ej. `https://mypc-backend.onrender.com`).
-
-### 2. Frontend en Vercel
-Para evitar problemas de CORS y llamadas absolutas rotas, empleamos **Vercel Rewrites** para delegar las peticiones a Render.
-
-1. Crea el archivo `frontend/vercel.json` con tus URLs:
-   ```json
-   {
-     "rewrites": [
-       { "source": "/api/:path*", "destination": "https://TU-BACKEND.onrender.com/api/:path*" },
-       { "source": "/uploads/:path*", "destination": "https://TU-BACKEND.onrender.com/uploads/:path*" }
-     ]
-   }
-   ```
-2. Crea un proyecto en **Vercel**, conecta el mismo repo.
-3. Elige **`frontend`** como **Root Directory**.
-4. ¡Despliega! Vercel servirá el frontend de manera estática e intermediará las peticiones a tu backend automáticamente.
+Proyecto de la **Unidad 4: Pruebas, seguridad y despliegue**.
+Implementa un CRUD completo en MongoDB con Mongoose, autenticación con JWT y OAuth de Google, carrito de compras con control de stock, y despliegue en producción (Frontend en Vercel + Backend en Render).
 
 ---
-Desarrollado con ❤️ para la Materia de Desarrollo Web.
+
+## 📋 Contenido de la asignación cumplido
+
+| Sesión | Tema | Estado |
+|--------|------|:------:|
+| 1 | CRUD en MongoDB (modelo, endpoints, Postman) | ✅ |
+| 2 | Autenticación JWT (login, middleware de protección) | ✅ |
+| 3 | OAuth con Google + Despliegue (Vercel + Render) | ✅ |
+
+---
+
+## ✨ Características
+
+- 🔐 **Autenticación**: registro, login con validación en tiempo real y OAuth de Google.
+- 🛒 **Carrito**: gestión en `localStorage`, control de stock dinámico y checkout con dirección de envío.
+- 🛍️ **Catálogo**: listado de productos, filtros por categoría/marca y página de detalle con productos relacionados.
+- 👤 **Perfil**: edición de datos, subida de avatar (Multer) y estadísticas de compra (total gastado, compras, categoría y marca favorita).
+- 🛠️ **Panel admin**: CRUD de usuarios y de productos (solo rol `admin`).
+- 🎨 **UI moderna**: glassmorphism en login, fondo de PC gamer, partículas interactivas con el mouse y diseño responsivo.
+
+---
+
+## 🗂️ Estructura del proyecto
+
+```
+DW Practica4/
+├── backend/
+│   ├── config/db.js          # Conexión a MongoDB
+│   ├── models/
+│   │   ├── User.js           # Usuario (auth, perfil, compras)
+│   │   └── Producto.js       # Producto (catálogo, stock)
+│   ├── routes/
+│   │   ├── auth.js           # Registro, login, perfil, avatar, stats, Google
+│   │   ├── users.js          # CRUD de usuarios (admin)
+│   │   ├── productos.js      # CRUD de productos
+│   │   └── compras.js        # Checkout / compras
+│   ├── middleware/
+│   │   ├── auth.js           # Verifica token JWT
+│   │   ├── passport.js       # Estrategia Google
+│   │   └── upload.js         # Subida de avatar (Multer)
+│   ├── seed.js               # Datos de prueba
+│   ├── server.js             # Punto de entrada (sirve el frontend)
+│   ├── .env                  # Variables de entorno (no se sube a Git)
+│   └── package.json
+├── frontend/
+│   ├── index.html            # Login / Registro (glassmorphism + partículas)
+│   ├── tienda.html           # Catálogo de productos
+│   ├── producto.html         # Detalle de producto
+│   ├── carrito.html          # Carrito + checkout
+│   ├── perfil.html           # Perfil, avatar, stats, panel admin
+│   ├── admin.html            # Acceso directo al panel (redirige a perfil)
+│   ├── dashboard.html        # (legacy) panel básico
+│   ├── css/style.css         # Estilos
+│   ├── js/                   # Lógica del frontend
+│   └── vercel.json           # Rewrites de /api y /uploads a Render
+└── README.md
+```
+
+---
+
+## 🚀 Instalación y ejecución en LOCAL
+
+### 1. Requisitos
+- Node.js >= 18
+- Cuenta de MongoDB Atlas (o MongoDB local)
+- Cuenta de Google Cloud Console (para OAuth)
+
+### 2. Clonar el repositorio
+```bash
+git clone https://github.com/sarafi23/Practica-de-DW-4.git
+cd "DW Practica4"
+```
+
+### 3. Instalar dependencias del backend
+```bash
+cd backend
+npm install
+```
+
+### 4. Configurar variables de entorno
+Creá un archivo **`backend/.env`** con este contenido (ajustá los valores a los tuyos):
+
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://USUARIO:PASSWORD@cluster0.3etvmtr.mongodb.net/practica4?retryWrites=true&w=majority
+JWT_SECRET=una_clave_secreta_segura
+GOOGLE_CLIENT_ID=tu_google_client_id
+GOOGLE_CLIENT_SECRET=tu_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+FRONTEND_URL=http://localhost:5000
+```
+
+> ⚠️ **Nota sobre redes locales**: algunos ISPs/routers bloquean el descubrimiento del replicaSet de Atlas (DNS SRV). Si al correr el proyecto obtenés `Server selection timed out`, cambiá la `MONGODB_URI` por la conexión **directa a un shard**:
+> ```env
+> MONGODB_URI=mongodb://USUARIO:PASSWORD@ac-gppbbg3-shard-00-00.3etvmtr.mongodb.net:27017/practica4?directConnection=true&ssl=true&authSource=admin&retryWrites=true&w=majority
+> ```
+> En servicios en la nube (Render) esto no es necesario; usá la URI normal con `mongodb+srv://`.
+
+### 5. Poblar la base de datos (opcional)
+```bash
+node seed.js
+```
+Crea 12 productos y 2 usuarios de prueba:
+- **Administrador**: `admin@mypc.com` / `admin123`
+- **Cliente demo**: `demo@test.com` / `123456` (con historial de compras cargado)
+
+### 6. Ejecutar
+```bash
+npm run dev      # desarrollo (con nodemon, se reinicia solo)
+# o
+npm start        # producción
+```
+Abrí el navegador en **http://localhost:5000**. El backend sirve el frontend automáticamente.
+
+---
+
+## 🌐 Despliegue en PRODUCCIÓN
+
+### Backend — Render
+1. Subí el repo a GitHub.
+2. En [Render](https://render.com) creá un **Web Service**, conectá el repo y poné **Root Directory = `backend`**.
+3. Build: `npm install` · Start: `npm start`.
+4. Variables de entorno en Render:
+   | Variable | Valor |
+   |---|---|
+   | `MONGODB_URI` | URI de Atlas (`mongodb+srv://...`) |
+   | `JWT_SECRET` | clave secreta |
+   | `GOOGLE_CLIENT_ID` | ID de OAuth |
+   | `GOOGLE_CLIENT_SECRET` | Secret de OAuth |
+   | `GOOGLE_CALLBACK_URL` | `https://TU-BACKEND.onrender.com/api/auth/google/callback` |
+   | `FRONTEND_URL` | `https://TU-FRONTEND.vercel.app` |
+
+### Frontend — Vercel
+1. En [Vercel](https://vercel.com) importá el repo.
+2. **Root Directory = `frontend`**, sin comando de build (sitio estático).
+3. El archivo `frontend/vercel.json` ya redirige `/api/*` y `/uploads/*` al backend de Render (rewrites), por lo que **no hace falta cambiar ninguna URL en el código del frontend**.
+4. Desplegá. Tu web queda en `https://TU-FRONTEND.vercel.app`.
+
+> 💡 Con los rewrites de Vercel no hay problemas de CORS y el frontend sigue usando rutas relativas (`/api/...`).
+
+### Configuración de Google OAuth (importante)
+En [Google Cloud Console → Credentials → OAuth Client ID](https://console.cloud.google.com/apis/credentials) agregá:
+- **Orígenes de JavaScript autorizados**:
+  - `http://localhost:5000`
+  - `https://TU-FRONTEND.vercel.app`
+- **URI de redirección autorizados**:
+  - `http://localhost:5000/api/auth/google/callback`
+  - `https://TU-FRONTEND.vercel.app/api/auth/google/callback`
+
+---
+
+## 🔌 Endpoints de la API
+
+### Autenticación y perfil
+| Método | Ruta | Descripción | Token |
+|--------|------|-------------|:-----:|
+| POST | `/api/auth/register` | Registrar usuario | No |
+| POST | `/api/auth/login` | Login, devuelve JWT | No |
+| GET | `/api/auth/google` | Iniciar OAuth Google | No |
+| GET | `/api/auth/google/callback` | Callback de Google | No |
+| GET | `/api/auth/perfil` | Obtener perfil | Sí |
+| PUT | `/api/auth/perfil` | Editar nombre/teléfono/dirección | Sí |
+| POST | `/api/auth/avatar` | Subir avatar (multipart/form-data) | Sí |
+| GET | `/api/auth/stats` | Estadísticas de compra | Sí |
+
+### Usuarios (admin)
+| Método | Ruta | Descripción | Admin |
+|--------|------|-------------|:-----:|
+| GET | `/api/usuarios` | Listar usuarios | Sí |
+| POST | `/api/usuarios` | Crear usuario | Sí |
+| GET | `/api/usuarios/:id` | Ver usuario | Sí |
+| PUT | `/api/usuarios/:id` | Editar usuario | Sí |
+| DELETE | `/api/usuarios/:id` | Eliminar usuario | Sí |
+
+### Productos y compras
+| Método | Ruta | Descripción | Auth |
+|--------|------|-------------|:-----:|
+| GET | `/api/productos` | Catálogo (filtros `?categoria=` `?marca=`) | No |
+| GET | `/api/productos/:id` | Detalle de producto | No |
+| POST | `/api/productos` | Crear producto | Admin |
+| PUT | `/api/productos/:id` | Editar producto/stock | Admin |
+| DELETE | `/api/productos/:id` | Eliminar producto | Admin |
+| POST | `/api/compras` | Checkout (reduce stock, guarda historial) | Sí |
+
+---
+
+## 🧪 Pruebas con Postman
+Se incluye `Practica4.postman_collection.json` con ejemplos de todas las rutas.
+Para rutas protegidas, enviá en los headers:
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## 🔑 Accesos de demostración
+- Admin: `admin@mypc.com` / `admin123`
+- Cliente: `demo@test.com` / `123456`
+
+---
+
+Desarrollado para la materia de Desarrollo Web — Unidad 4.
