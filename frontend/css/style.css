@@ -350,6 +350,26 @@ textarea { resize: vertical; min-height: 80px; }
   border: 1px solid rgba(255,255,255,0.15);
   color: #fff;
 }
+.input-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-icon input { width: 100%; padding-right: 42px; }
+.toggle-pass {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s;
+}
+.toggle-pass:hover { color: #fff; }
 .auth-card .form-group input::placeholder { color: rgba(255,255,255,0.3); }
 .auth-card .form-group input:focus {
   border-color: var(--primary);
